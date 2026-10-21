@@ -1,0 +1,19 @@
+Yazılım Geliştirici Stajyeri (Python / Yapay Zeka)
+
+Şirketimiz, doğal dil işleme ve yapay zeka projeleri geliştiren ekibine katılacak
+yazılım geliştirici stajyeri arıyor.
+
+Sorumluluklar:
+- Python ile veri işleme ve model geliştirme çalışmalarına destek vermek
+- Doğal dil işleme (NLP) projelerinde metin ön işleme ve analiz adımlarını geliştirmek
+- Veritabanı sorguları yazmak ve ilişkisel veri modelleri üzerinde çalışmak
+- Git ile versiyon kontrolü yaparak ekip içinde çalışmak
+
+Aranan Nitelikler:
+- Yazılım Mühendisliği veya Bilgisayar Mühendisliği öğrencisi olmak
+- Python programlama dilini iyi derecede bilmek
+- SQL ve veritabanı temel bilgisine sahip olmak
+- Git ve GitHub kullanımına hakim olmak
+- Makine öğrenmesi ve derin öğrenme kavramlarına ilgi duymak
+- Docker ve REST API konusunda temel bilgi sahibi olmak artı olacaktır
+- Takım çalışmasına yatkın, öğrenmeye açık olmak
