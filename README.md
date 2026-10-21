@@ -14,12 +14,14 @@ CV'den beceri, eğitim ve deneyim bilgisi Türkçe NER ile çıkarılır; ilan m
 pdfplumber / python-docx — CV dosyasından metin çıkarma
 BERTurk tabanlı Türkçe NER — varlık tanıma
 TF-IDF + BERTurk gömme, kosinüs benzerliği — eşleştirme skoru
+
 2. Ses analizi
 
 Mülakat kaydından konuşma metne çevrilir ve konuşma tarzı analiz edilir.
 
 Fısıltı — Türkçe konuşma → metin
 librosa — konuşma hızı, duraksama süresi, pitch analizi
+
 3. Görüntü işleme
 
 Yüz tespiti ve duygu sınıflandırması, hazır/pretrained modeller kullanılmadan sıfırdan eğitilen iki ayrı CNN ile yapılıyor.
@@ -27,6 +29,7 @@ Yüz tespiti ve duygu sınıflandırması, hazır/pretrained modeller kullanılm
 Yüz tespiti: sliding window + kendi eğittiğimiz CNN (WIDER FACE veri setiyle)
 Duygu sınıflandırma: kendi eğittiğimiz CNN (FER-2013 veri setiyle)
 Grad-CAM — modelin kararını görselleştirme (hangi bölgeye bakarak karar verdiği)
+
 4. Değerlendirme motoru
 
 CV, ses ve görüntü modüllerinden gelen sonuçlar ağırlıklı bir skorda birleştirilir, JSON formatında saklanır ve aday/işveren panellerine ayrı görünümler olarak sunulur.
