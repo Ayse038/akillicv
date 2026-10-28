@@ -1,75 +1,74 @@
 # AkıllıCV
-
+ 
 NLP tabanlı CV analizi ve çok modlu aday değerlendirme sistemi — bitirme projesi.
-
+ 
 ## Proje ne yapıyor?
-
+ 
 AkıllıCV, bir CV'yi iş ilanıyla otomatik karşılaştırıp uyum skoru çıkarıyor ve mülakat sırasında
 konuşma ile yüz ifadesini analiz ederek adayı daha bütünlüklü şekilde değerlendiriyor. Amaç,
 tek bir metin eşleştirmesinden ibaret kalmayıp CV, ses ve görüntü verisini tek bir sistemde
 birleştiren, kararlarını açıklayabilen ve adil çalışıp çalışmadığı test edilmiş bir değerlendirme
 aracı ortaya koymak.
-
+ 
 ## İçerdiği modüller
-
+ 
 ### 1. CV analizi
 CV'den beceri, eğitim ve deneyim bilgisi Türkçe NER ile çıkarılır; ilan metniyle TF-IDF ve
 BERTurk gömme vektörleri üzerinden karşılaştırılır. İlanda olup CV'de olmayan beceriler
 adaya öneri olarak sunulur.
-
+ 
 - `pdfplumber` / `python-docx` — CV dosyasından metin çıkarma
 - BERTurk tabanlı Türkçe NER — varlık tanıma
 - TF-IDF + BERTurk gömme, kosinüs benzerliği — eşleştirme skoru
-
 ### 2. Ses analizi
 Mülakat kaydından konuşma metne çevrilir ve konuşma tarzı analiz edilir.
-
+ 
 - Whisper — Türkçe konuşma → metin
 - librosa — konuşma hızı, duraksama süresi, pitch analizi
-
 ### 3. Görüntü işleme
 Yüz tespiti ve duygu sınıflandırması, hazır/pretrained modeller kullanılmadan **sıfırdan
 eğitilen** iki ayrı CNN ile yapılıyor.
-
+ 
 - Yüz tespiti: sliding window + kendi eğittiğimiz CNN (WIDER FACE veri setiyle)
 - Duygu sınıflandırma: kendi eğittiğimiz CNN (FER-2013 veri setiyle)
 - Grad-CAM — modelin kararını görselleştirme (hangi bölgeye bakarak karar verdiği)
-
 ### 4. Değerlendirme motoru
 CV, ses ve görüntü modüllerinden gelen sonuçlar ağırlıklı bir skorda birleştirilir, JSON
 formatında saklanır ve aday/işveren panellerine ayrı görünümler olarak sunulur.
-
+ 
 ### 5. Adalet ve KVKK testi
 Aynı CV'nin kimlikli ve anonimleştirilmiş (isim/cinsiyet/yaş maskelenmiş) versiyonları
 sisteme verilip skor farkı ölçülüyor — sistemin kimlik bilgilerinden etkilenip
 etkilenmediğini test ediyoruz.
-
+ 
 ### 6. Değerlendirme deneyi
 Sistemin ürettiği aday sıralaması, insanların elle yaptığı sıralamayla
 (`scipy.stats.spearmanr`) karşılaştırılıyor.
-
+ 
 ## Kullanılan teknolojiler
-
+ 
 | Alan | Araç/Yöntem |
 |---|---|
 | CV metin analizi | BERTurk, TF-IDF, Türkçe NER |
 | Ses analizi | Whisper, librosa |
 | Görüntü işleme | Kendi eğitilen CNN modelleri, Grad-CAM |
 | Değerlendirme | pandas, scipy |
-
+ 
 ## Şu anki dosyalar
-
+ 
 | Dosya | Ne işe yarıyor? |
 |---|---|
 | `metin_cikarma.py` | CV'yi (PDF) okuyup içindeki yazıyı metne çeviriyor (`pdfplumber`) |
 | `ner_analizi.py` | CV metnini Türkçe NER modeline verip içindeki varlıkları (kişi, kurum, yer vb.) buluyor |
 | `eslestirme_tfidf.py` | CV ile iş ilanını TF-IDF ve kosinüs benzerliğiyle karşılaştırıp uyum skoru çıkarıyor |
+| `berturk_eslestirme.py` | İlan maddelerini CV satırlarıyla BERTurk gömme vektörleri üzerinden anlamca eşleştirip skor çıkarıyor |
+| `beceri_analizi.py` | İlanın istediği becerileri bulup CV'de olmayanları (eksik becerileri) listeliyor |
 | `ilan.txt` | Eşleştirmeyi denemek için kullanılan örnek iş ilanı |
 | `ornek_cv.pdf` | Kodları denemek için hazırlanmış örnek CV |
 | `requirements.txt` | Projenin ihtiyaç duyduğu Python kütüphaneleri |
-
+ 
 ## Nasıl çalıştırılır?
-
+ 
 1. Python 3.12 ve (isteğe bağlı) bir sanal ortam kur.
 2. Gerekli kütüphaneleri yükle:
 ```
@@ -80,19 +79,21 @@ Sistemin ürettiği aday sıralaması, insanların elle yaptığı sıralamayla
    python metin_cikarma.py
    python ner_analizi.py
    python eslestirme_tfidf.py
+   python berturk_eslestirme.py
+   python beceri_analizi.py
 ```
-   `ner_analizi.py` ilk çalıştırmada Hugging Face'ten NER modelini indirir, bu yüzden biraz
-   zaman alabilir.
-
+   `ner_analizi.py` ve `berturk_eslestirme.py` ilk çalıştırmada Hugging Face'ten modelini
+   indirir, bu yüzden biraz zaman alabilir.
+ 
 ## Yol haritası
-
+ 
 - [x] Sistem mimarisinin ve modüllerin planlanması
-- [ ] CV metin analizi modülünün geliştirilmesi
+- [x] CV metin analizi modülünün geliştirilmesi
   - [x] CV'den metin çıkarma (`pdfplumber`)
   - [x] Türkçe NER ile varlık çıkarma (BERTurk tabanlı model)
   - [x] İş ilanı ile CV'yi TF-IDF ve kosinüs benzerliğiyle eşleştirme
-  - [ ] BERTurk gömme vektörleriyle anlamsal eşleştirme
-  - [ ] Eksik beceri analizi
+  - [x] BERTurk gömme vektörleriyle anlamsal eşleştirme
+  - [x] Eksik beceri analizi
 - [ ] Değerlendirme deneyi için veri toplama (anonim CV + insan sıralaması)
 - [ ] Yüz tespiti modelinin WIDER FACE ile eğitilmesi
 - [ ] Duygu sınıflandırma modelinin FER-2013 ile eğitilmesi
@@ -103,11 +104,11 @@ Sistemin ürettiği aday sıralaması, insanların elle yaptığı sıralamayla
 - [ ] Aday ve işveren panellerinin geliştirilmesi
 
 ## Geliştirme günlüğü
-
+ 
 Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
-
+ 
 ### Hafta 1 — 10 Ekim 2026
-
+ 
 - Proje GitHub'a yüklendi, README ve yol haritası oluşturuldu.
 - Python ortamı kuruldu (PyCharm + sanal ortam), `pdfplumber` ve `python-docx` yüklendi.
 - `metin_cikarma.py` yazıldı: örnek bir CV'den (PDF) metin başarıyla çıkarıldı.
@@ -116,9 +117,9 @@ Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
 - Karşılaşılan sorun: PDF dosyası yanlışlıkla `.venv` klasörünün içinde kaldığı için kod
   dosyayı bulamadı (`FileNotFoundError`). Dosya proje klasörüne taşınınca sorun çözüldü.
 - Sıradaki adım: iş ilanı metnini aynı şekilde işleyip TF-IDF ile CV–ilan eşleştirmesi yapmak.
-
+- 
 ### Hafta 2 — 21 Ekim 2026
-
+ 
 - Örnek bir iş ilanı hazırlandı (`ilan.txt`).
 - `eslestirme_tfidf.py` yazıldı: CV ve ilan TF-IDF ile sayısal vektörlere çevrilip kosinüs
   benzerliğiyle karşılaştırıldı. Örnek CV için uyum skoru %41,0 çıktı.
@@ -126,9 +127,20 @@ Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
 - Türkçe büyük `İ`/`I` harfi sorunu ve ek problemi (harf parçalarıyla karşılaştırma) ele alındı.
 - `requirements.txt`'e `scikit-learn` eklendi. Haftanın detayları `hafta2/README.md` içinde.
 - Sıradaki adım: BERTurk gömme vektörleriyle anlamsal eşleştirme ve eksik beceri analizi.
-
+- 
+### Hafta 3 — 28 Ekim 2026
+ 
+- `berturk_eslestirme.py` yazıldı: ilanın her maddesi için CV'deki anlamca en yakın satır
+  BERTurk tabanlı cümle modeliyle bulundu. Örnek için BERTurk uyum skoru %66,5 çıktı.
+- `beceri_analizi.py` yazıldı: ilanın istediği 9 beceriden 5'i CV'de bulundu (%56),
+  eksikler: Docker, REST API, makine öğrenmesi, derin öğrenme.
+- `requirements.txt`'e `sentence-transformers` eklendi. Haftanın detayları `hafta3/README.md` içinde.
+- CV analizi modülü tamamlandı.
+- Sıradaki adım: görüntü işleme, duygu sınıflandırma CNN'inin FER-2013 ile eğitilmesi.
+- 
 ## Proje bilgisi
-
+ 
 - **Öğrenci:** Ayşe Ak
 - **Üniversite:** Kayseri Üniversitesi, Yazılım Mühendisliği
 - **Danışman:** Ayhan Renklier
+
