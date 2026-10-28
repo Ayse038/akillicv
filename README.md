@@ -102,7 +102,6 @@ Sistemin ürettiği aday sıralaması, insanların elle yaptığı sıralamayla
 - [ ] Adalet / KVKK testinin uygulanması
 - [ ] Tüm modüllerin tek bir değerlendirme motorunda birleştirilmesi
 - [ ] Aday ve işveren panellerinin geliştirilmesi
-
 ## Geliştirme günlüğü
  
 Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
@@ -117,7 +116,6 @@ Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
 - Karşılaşılan sorun: PDF dosyası yanlışlıkla `.venv` klasörünün içinde kaldığı için kod
   dosyayı bulamadı (`FileNotFoundError`). Dosya proje klasörüne taşınınca sorun çözüldü.
 - Sıradaki adım: iş ilanı metnini aynı şekilde işleyip TF-IDF ile CV–ilan eşleştirmesi yapmak.
-- 
 ### Hafta 2 — 21 Ekim 2026
  
 - Örnek bir iş ilanı hazırlandı (`ilan.txt`).
@@ -127,7 +125,6 @@ Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
 - Türkçe büyük `İ`/`I` harfi sorunu ve ek problemi (harf parçalarıyla karşılaştırma) ele alındı.
 - `requirements.txt`'e `scikit-learn` eklendi. Haftanın detayları `hafta2/README.md` içinde.
 - Sıradaki adım: BERTurk gömme vektörleriyle anlamsal eşleştirme ve eksik beceri analizi.
-- 
 ### Hafta 3 — 28 Ekim 2026
  
 - `berturk_eslestirme.py` yazıldı: ilanın her maddesi için CV'deki anlamca en yakın satır
@@ -137,7 +134,6 @@ Her hafta yapılan çalışmalar burada kısaca kaydediliyor.
 - `requirements.txt`'e `sentence-transformers` eklendi. Haftanın detayları `hafta3/README.md` içinde.
 - CV analizi modülü tamamlandı.
 - Sıradaki adım: görüntü işleme, duygu sınıflandırma CNN'inin FER-2013 ile eğitilmesi.
-- 
 ## Proje bilgisi
  
 - **Öğrenci:** Ayşe Ak
