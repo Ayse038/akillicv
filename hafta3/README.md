@@ -1,4 +1,4 @@
-
+# AkıllıCV — Hafta 3
 
 Bu hafta CV analizi modülünü tamamladım: ilan ile CV'yi anlam düzeyinde karşılaştırdım ve
 CV'de eksik olan becerileri buldum.
